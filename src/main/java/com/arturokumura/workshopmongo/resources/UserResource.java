@@ -2,7 +2,6 @@ package com.arturokumura.workshopmongo.resources;
 
 import com.arturokumura.workshopmongo.domain.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +14,7 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    //Criar metodos HTTP
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity <List<User>> findAll() {
         User maria = new User("1", "Maria Brown", "maria@gmail.com");
