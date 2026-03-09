@@ -1,12 +1,17 @@
 package com.arturokumura.workshopmongo.config;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
+import com.arturokumura.workshopmongo.domain.Post;
 import com.arturokumura.workshopmongo.domain.User;
+import com.arturokumura.workshopmongo.repository.PostRepository;
 import com.arturokumura.workshopmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -14,14 +19,32 @@ public class Instantiation implements CommandLineRunner {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
     @Override
     public void run(String... arg0) throws  Exception {
+
+        System.out.println("BANCO USADO: " + mongoTemplate.getDb().getName());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
         userRepository.deleteAll();
+        postRepository.deleteAll();
 
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem","Vou viajar para São Paulo. Abraços!", alex);
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia","Acordei feliz hoje!", alex);
+
+        postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
