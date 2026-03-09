@@ -1,5 +1,6 @@
 package com.arturokumura.workshopmongo.config;
 
+import com.arturokumura.workshopmongo.dto.AuthorDTO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import com.arturokumura.workshopmongo.domain.Post;
 import com.arturokumura.workshopmongo.domain.User;
@@ -42,8 +43,8 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem","Vou viajar para São Paulo. Abraços!", alex);
-        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia","Acordei feliz hoje!", alex);
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem","Vou viajar para São Paulo. Abraços!", new AuthorDTO(alex));
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia","Acordei feliz hoje!", new AuthorDTO( alex));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
